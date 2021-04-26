@@ -72,10 +72,10 @@ async def ADMM_LR(A, b, Lambda, N, rho, ABSTOL = 1e-4, RELTOL = 1e-2):
     for i in range(max_iter):
         print("update", i)
         try:
-            startTime = time()
+            # startTime = time()
             (x, z, u, r, s) = await ADMM_LR_update(A, b, Lambda, m, n, rho, x, z, u) 
-            endTime = time()
-            print("time:", endTime - startTime)
+            # endTime = time()
+            # print("time:", endTime - startTime)
             # termination checks
             """
             r_norm = np.sum(r**2)
@@ -262,35 +262,22 @@ async def main():
 #     else:
 #         print("No Input File.")
 #         return
-    fileName = "../data/banknote.csv"
+    fileName = "../data/sonar.csv"
     
     await mpc.start()
     # Train/test split
-    # X, y = read_data(fileName)
-    n = 2000
-    p = 10
-    beta_real = np.array([np.random.uniform(-3,3) for i in range(p)]).reshape(1,p)
-    beta_real = beta_real * (abs(beta_real)>=1)
-    X = np.random.normal(0,1,n*p).reshape(n,p)
-    
-    y1 = np.sign(np.dot(X,beta_real.T).T + np.random.normal(0,0.1,n))[0]
-    y2 = 1/(1+np.e**np.dot(X,beta_real.T).T)[0]
-    y2 = np.array([np.random.binomial(1,i) for i in y2])
-    y2 = 2*(y2-0.5)
+    X, y = read_data(fileName)
 
-    y=y2
     rnd = await mpc.transfer(random.randrange(2**31), senders=0)
     X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, train_size=0.7, random_state=rnd)
     
     # Normal Logistic Regression
-    clf = linear_model.LogisticRegression(penalty='l1', random_state=0, max_iter=1000, solver = 'liblinear')
-    clf.fit(X_train, y_train)
-    error_train_skit = error(y_train, clf.predict(X_train))
-    error_test_skit = error(y_test, clf.predict(X_test))
-    print(f'scikit train error: {error_train_skit}')
-    print(f'scikit test error:  {error_test_skit}')
-    clf_params = clf.get_params()
-    # print(clf_params)
+    # clf = linear_model.LogisticRegression(penalty='l1', random_state=0, max_iter=1000, solver = 'liblinear')
+    # clf.fit(X_train, y_train)
+    # error_train_skit = error(y_train, clf.predict(X_train))
+    # error_test_skit = error(y_test, clf.predict(X_test))
+    # print(f'scikit train error: {error_train_skit}')
+    # print(f'scikit test error:  {error_test_skit}')
     
     # MPC
     secint = mpc.SecInt()

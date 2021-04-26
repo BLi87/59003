@@ -262,7 +262,7 @@ async def main():
 #     else:
 #         print("No Input File.")
 #         return
-    fileName = "../data/banknote_40.csv"
+    fileName = "../data/banknote_30.csv"
     print(fileName)
     
     await mpc.start()

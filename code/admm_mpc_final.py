@@ -23,6 +23,8 @@ secint = mpc.SecInt()
 secfxp = mpc.SecFxp()
 def read_data(filePath):
     data =  pd.read_csv(filePath, header = None)
+    newdata = pd.concat([data, data[:1200]])
+    # newdata = data[:1000]
     X, y= data.iloc[:,0:-1].to_numpy(), data.iloc[:,-1].to_numpy()
     return X, y
 
@@ -262,7 +264,7 @@ async def main():
 #     else:
 #         print("No Input File.")
 #         return
-    fileName = "../data/banknote_50.csv"
+    fileName = "../data/banknote.csv"
     print(fileName)
     
     await mpc.start()

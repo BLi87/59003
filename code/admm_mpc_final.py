@@ -262,7 +262,8 @@ async def main():
 #     else:
 #         print("No Input File.")
 #         return
-    fileName = "../data/banknote_20.csv"
+    fileName = "../data/banknote_40.csv"
+    print(fileName)
     
     await mpc.start()
     # Train/test split

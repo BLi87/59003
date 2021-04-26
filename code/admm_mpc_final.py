@@ -262,7 +262,7 @@ async def main():
 #     else:
 #         print("No Input File.")
 #         return
-    fileName = "../data/sonar.csv"
+    fileName = "../data/banknote_20.csv"
     
     await mpc.start()
     # Train/test split
